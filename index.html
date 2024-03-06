@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minuteur jusqu'à une date précise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Couleur de fond */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        #timer {
+            background-color: #f5f5f5; /* Fond blanc métal */
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 24px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        // Fonction pour mettre à jour le minuteur
+        function updateTimer() {
+            // Date de fin
+            var endDate = new Date("2024-03-07T20:59:59").getTime();
+            
+            // Date actuelle
+            var now = new Date().getTime();
+            
+            // Calcul du temps restant
+            var distance = endDate - now;
+            
+            // Calcul des jours, heures, minutes et secondes restants
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Affichage du temps restant dans l'élément avec l'id "timer"
+            var timerElement = document.getElementById("timer");
+            if (timerElement) {
+                timerElement.innerHTML = hours + " : "
+                + minutes + " : " + seconds;
+                
+                // Si le compte à rebours est terminé, afficher un message
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    timerElement.innerHTML = "EXPIRÉ";
+                }
+            } else {
+                console.error("L'élément avec l'ID 'timer' n'a pas été trouvé.");
+            }
+        }
+        
+        // Mettre à jour le minuteur toutes les secondes
+        var timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</head>
+<body>
+
+<div id="timer"></div>
+
+</body>
+</html>
